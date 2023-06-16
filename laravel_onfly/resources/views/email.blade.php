@@ -15,18 +15,19 @@
             <tr>
                 <td style="vertical-align: top; padding-bottom:30px;" align="center">
                     </a>
-                    <h2>Controle de Despesas </h2>
-                <div style="padding: 0 20px 0 20px; background: #fefefe;">
-                    <p>Sua despesa foi cadastrada com sucesso !</p>
-                    <p>Descriçao: </p>
-                    <p>Categoria: </p>
-                    <p>Valor: </p>
-                </div>
+                    <h2>Controle de Despesas</h2>
+                    <div style="padding: 0 20px 0 20px; background: #fefefe;">
+                        <p>Sua despesa foi cadastrada com sucesso!</p>
+                        <p>Usuario: {{ $sendMail->user }}</p>
+                        <p>Descrição: {{ $sendMail->description }}</p>
+                        <p>Categoria: {{ $sendMail->category }}</p>
+                        <p>Valor: {{ $sendMail->value }}</p>
+                        <p>Data: {{ $sendMail->date }}</p>
+                    </div>
                 </td>
             </tr>
             </tbody>
         </table>
-
     </div>
 </div>
 </body>

@@ -14,15 +14,16 @@ class SendMail extends Mailable
     use Queueable, SerializesModels;
     public $sendMail;
 
-    public function __construct($sendMail)
+    public function __construct($request)
     {
-        $this->sendMail = $sendMail;
+        $this->sendMail = $request;
     }
 
     public function content(): Content
     {
         return new Content(
             view: 'email',
+            with: ['despesas' => $this->sendMail]
         );
     }
 }

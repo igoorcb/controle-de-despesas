@@ -18,8 +18,8 @@ class ExpensesController extends Controller
         Expenses::create($data);
 
         if ($data) {
-            $email = $request->email;
-            $this->mail($email);
+
+            $this->mail($request);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Despesa cadastrada com sucesso!'
@@ -48,12 +48,12 @@ class ExpensesController extends Controller
         $expenses = Expenses::where('user_id', auth()->user()->id)->get();
         return $expenses;
     }
-    public function mail($email)
+    public function mail($request)
     {
         $sendMail = [
             'title' => 'Controle de Despesas',
             'body' => 'This is for testing email using smtp'
         ];
-        Mail::to($email)->send(new sendMail($sendMail));
+        Mail::to($request->email)->send(new sendMail($request));
     }
 }
