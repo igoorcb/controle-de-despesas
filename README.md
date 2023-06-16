@@ -1,11 +1,12 @@
 # Como rodar o projeto:
 
-Login usando o JWT e CRUD para cadastro de despesas.
+Login usando o JWT e CRUD para cadastro de despesas. 
 
 ## Recursos
 - Vue 3
 - Laravel
 - Recurso 3
+- Wsl 2
 
 ## Pré-requisitos
 
