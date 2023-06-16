@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
-            $table->string('user',100);
-            $table->string('description',191);
-            $table->string('category',20);
+            $table->foreignIdFor(User::class);
+            $table->string('user', 100);
+            $table->string('description', 191);
+            $table->string('category', 20);
             $table->timestamp('date');
-            $table->float('value',10,2);
+            $table->float('value', 10, 2);
             $table->timestamps();
         });
     }

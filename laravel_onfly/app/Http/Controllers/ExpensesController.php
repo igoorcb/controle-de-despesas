@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Mail\SendMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,11 +12,14 @@ use Illuminate\Support\Facades\Mail;
 
 class ExpensesController extends Controller
 {
-    public function save(Request $request){
+    public function save(Request $request)
+    {
         $data = $request->all();
         Expenses::create($data);
 
-        if($data){
+        if ($data) {
+            $email = $request->email;
+            $this->mail($email);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Despesa cadastrada com sucesso!'
@@ -26,12 +31,21 @@ class ExpensesController extends Controller
             'message' => 'Houve erros ao processar sua solicitação'
         ], 400);
     }
-    
-    public function show(){
+
+    public function show()
+    {
         $user = Auth::user();
         $id = $user->id;
 
-        $expenses = Expenses::where('id_user',  auth()->user()->id)->get();
+        $expenses = Expenses::where('user_id', auth()->user()->id)->get();
         return $expenses;
+    }
+    public function mail($email)
+    {
+        $sendMail = [
+            'title' => 'Controle de Despesas',
+            'body' => 'This is for testing email using smtp'
+        ];
+        Mail::to($email)->send(new sendMail($sendMail));
     }
 }

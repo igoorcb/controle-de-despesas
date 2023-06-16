@@ -39,24 +39,49 @@ import { format } from 'date-fns';
 export default {
   data() {
     return {
-      id_user:'',
+      user_id:'',
       user:'',
+      login_token:'',
       description:'',
       category: '',
       value: '',
       date: '',
       categoryOptions: ["Alimentação", "Lazer", "Transporte", "Outros"],
+      expenses: [],
     };
   },
   created(){
       this.user = Cookie.get('user_name');
-      this.id_user = Cookie.get('id_user');
+      this.login_token = Cookie.get('login_token');
+      this.user_id = Cookie.get('user_id');
+      this.user_email = Cookie.get('user_mail');
+    },
+    mounted(){
+      this.showExpense();
+    },
+    wacth(){
+      this.showExpense();
     },
   methods: {
+    async showExpense(){
+      let resp =  await fetch(`http://127.0.0.1:8000/api/show_expenses`, {
+        method: 'get',
+        headers: {
+          Authorization: 'Bearer ' + this.login_token,
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+      .then(resp => {
+        console.log(resp);
+        this.expenses = resp;
+        console.log(this.expenses)
+      })
+    },
     addExpense() {
       const register_expenses = {
-        id_user: this.id_user ,
+        user_id: this.user_id ,
         user: this.user ,
+        email: this.user_email,
         description: this.description ,
         category: this.category ,
         value: this.value ,
@@ -72,7 +97,6 @@ export default {
         body: JSON.stringify(register_expenses)
       }).then(response => response.json())
         .then(res => {
-          console.log(res);
           alert('Despesa adicionada com sucesso !');
         })
         .catch(error => {
@@ -83,6 +107,7 @@ export default {
         this.category = "";
         this.value = "";
         this.date = "";
+        this.showExpense();
     },
     deleteExpense(expenseId) {
       const index = this.expenses.findIndex((expense) => expense.id === expenseId);
@@ -94,6 +119,5 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 </style>
