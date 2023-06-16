@@ -67,8 +67,10 @@ export default {
         body: JSON.stringify(payload)
       }).then(response => response.json())
         .then(res => {
+          console.log(res);
           Cookie.set('login_token', res.authorization.token);
           Cookie.set('user_name', res.user.name);
+          Cookie.set('id_user', res.user.id);
           this.$router.push('/despesas'); // Redireciona para a rota '/despesas'
         })
         .catch(error => {

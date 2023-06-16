@@ -8,11 +8,11 @@
         <q-card class="bg-grey-4">
           <q-card-section>
             <div class="q-gutter-md">
-              <q-input v-model="this.user" filled label="Usuário Logado" outlined />
-              <q-input v-model="newExpense.description" filled label="Descrição" outlined />
-              <q-select class="q-mt-md " v-model="newExpense.category" filled label="Categoria" outlined :options="categoryOptions" />
-              <q-input v-model="newExpense.amount" filled label="Valor" type="number" outlined />
-              <q-input v-model="newExpense.date" filled type="date" label="Data" />
+              <q-input v-model="this.user" filled label="Usuário Logado" outlined readonly />
+              <q-input v-model="description" filled label="Descrição" outlined />
+              <q-select class="q-mt-md " v-model="category" filled label="Categoria" outlined :options="categoryOptions" />
+              <q-input v-model="value" filled label="Valor" type="number" outlined />
+              <q-input v-model="date" filled type="date" label="Data" />
             </div>
             <div class="q-gutter-md row items-end justify-end">
               <q-btn label="Adicionar Despesa" @click="addExpense" color="purple" class="q-mt-lg" />
@@ -22,7 +22,7 @@
             <template v-slot:body-cell="props">
               <q-td v-if="props.col.name !== 'actions'">{{ props.value }}</q-td>
               <q-td v-else>
-                <q-btn flat dense style="background-color: red;" icon="mdi-delete" @click="deleteExpense(props.row.id)" />
+                <q-btn flat dense  icon="delete" @click="deleteExpense(props.row.id)" />
               </q-td>
             </template>
           </q-table>
@@ -39,88 +39,50 @@ import { format } from 'date-fns';
 export default {
   data() {
     return {
-      newExpense: {
-        description: "",
-        amount: "",
-        date: "",
-        category: "",
-      },
-      expenses: [],
-      columns: [
-        {
-          name: "user",
-          required: true,
-          label: "Usuário",
-          align: "left",
-          field: "user",
-          sortable: true,
-        },
-        {
-          name: "description",
-          required: true,
-          label: "Descrição",
-          align: "left",
-          field: "description",
-          sortable: true,
-        },
-        {
-          name: "category",
-          required: true,
-          label: "Categoria",
-          align: "left",
-          field: "category",
-          sortable: true,
-        },
-        {
-          name: "amount",
-          required: true,
-          label: "Valor",
-          align: "left",
-          field: "amount",
-          sortable: true,
-        },
-        {
-          name: "date",
-          required: true,
-          label: "Data",
-          align: "left",
-          field: "date",
-          sortable: true,
-        },
-        { name: "actions", label: "Ações", align: "center", field: "actions" },
-      ],
+      id_user:'',
+      user:'',
+      description:'',
+      category: '',
+      value: '',
+      date: '',
       categoryOptions: ["Alimentação", "Lazer", "Transporte", "Outros"],
     };
   },
   created(){
       this.user = Cookie.get('user_name');
+      this.id_user = Cookie.get('id_user');
     },
   methods: {
     addExpense() {
-      if (!this.newExpense.description || !this.newExpense.amount || !this.newExpense.date) {
-        return;
-      }
-      const newId = this.expenses.length + 1;
-      const formattedDate = format(new Date(this.newExpense.date), 'dd/MM/yyyy');
-      const formattedAmount = Number(this.newExpense.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const register_expenses = {
+        id_user: this.id_user ,
+        user: this.user ,
+        description: this.description ,
+        category: this.category ,
+        value: this.value ,
+        date: this.date,
+      };
+      fetch(`http://127.0.0.1:8000/api/register_expenses`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(register_expenses)
+      }).then(response => response.json())
+        .then(res => {
+          console.log(res);
+          alert('Despesa adicionada com sucesso !');
+        })
+        .catch(error => {
+           alert('algo deu errado');
+        });
 
-
-      this.expenses.push({
-        id: newId,
-        user: this.user,
-        description: this.newExpense.description,
-        amount: formattedAmount,
-        date: formattedDate,
-        category: this.newExpense.category,
-      });
-
-      this.newExpense.user = "";
-      this.newExpense.category = "";
-      this.newExpense.amount = "";
-      this.newExpense.date = "";
-    },
-    editExpense(expense) {
-      console.log("Editar despesa:", expense);
+        this.description = "";
+        this.category = "";
+        this.value = "";
+        this.date = "";
     },
     deleteExpense(expenseId) {
       const index = this.expenses.findIndex((expense) => expense.id === expenseId);

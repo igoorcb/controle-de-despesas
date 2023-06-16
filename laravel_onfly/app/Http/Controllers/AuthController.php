@@ -58,30 +58,4 @@ class AuthController extends Controller
             'message' => 'Houve erros ao processar sua solicitação'
         ], 400);
     }
-
-
-    public function show()
-    {
-        $data = Auth::user();
-
-        if($data){
-            return response()->json($data);
-        }
-
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Houve erros ao processar sua solicitação'
-        ], 400);
-    }
-
-    public function logout()
-    {
-        $user = auth()->logout();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logout realizado. Seu token está inativo'
-        ], 200);
-
-    }
 }
