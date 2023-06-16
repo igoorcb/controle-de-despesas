@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExpensesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +15,14 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+//Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+//Expenses
+Route::post('/register_expenses', [ExpensesController::class, 'save']);
 
 Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::get('/show', [AuthController::class, 'show']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/show_expenses', [ExpensesController::class, 'show']);
+    Route::post('/delete', [ExpensesController::class, 'delete']);
 });
-

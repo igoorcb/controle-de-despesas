@@ -6,9 +6,10 @@
       <div class="row">
         <q-card square class="shadow-24 size_card">
           <q-card-section class="bg-deep-purple-7">
-            <h4 class="text-h5 text-white q-my-md">Login</h4>
+            <h4 class="text-h5 text-white q-my-md text-center">Login</h4>
           </q-card-section>
           <q-card-section>
+            <img src="https://app.onfly.com.br/images/main-logo.png" class="img_login" alt="Logo">
             <q-form class="q-px-sm q-pt-xl" >
               <q-input square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
@@ -37,10 +38,8 @@
 </template>
 <script>
 import Cookie from 'js-cookie';
-
 export default {
   data() {
-
     return {
       email: '',
       password: '',
@@ -50,7 +49,6 @@ export default {
   created() {
     Cookie.remove('login_token');
   },
-
   methods: {
     submit() {
       const payload = {
@@ -67,8 +65,11 @@ export default {
         body: JSON.stringify(payload)
       }).then(response => response.json())
         .then(res => {
+          console.log(res);
           Cookie.set('login_token', res.authorization.token);
           Cookie.set('user_name', res.user.name);
+          Cookie.set('user_mail', res.user.email);
+          Cookie.set('user_id', res.user.id);
           this.$router.push('/despesas'); // Redireciona para a rota '/despesas'
         })
         .catch(error => {
@@ -77,8 +78,6 @@ export default {
     },
   }
 }
-
-
 </script>
 
 <style>
