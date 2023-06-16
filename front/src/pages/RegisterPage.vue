@@ -10,6 +10,11 @@
             </q-card-section>
             <q-card-section>
               <q-form class="q-px-sm q-pt-xl q-pb-lg">
+                <q-input square clearable v-model="name" type="text" label="Nome Completo">
+                  <template v-slot:prepend>
+                    <q-icon name="person" />
+                  </template>
+                </q-input>
                 <q-input square clearable v-model="email" type="email" label="Email">
                   <template v-slot:prepend>
                     <q-icon name="email" />
@@ -23,26 +28,53 @@
               </q-form>
             </q-card-section>
             <q-card-actions class="q-px-lg">
-              <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" label="Cadastrar" />
+              <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" @click="register" label="Cadastrar" />
             </q-card-actions>
             <q-card-section class="text-center q-pa-sm">
-              <p class="text-grey-6">Voltar para o  login</p>
+              <router-link to="/">
+              <q-btn color="grey-4" text-color="purple" glossy unelevated icon="arrow_back" label="Voltar para o login"  />
+            </router-link>
             </q-card-section>
           </q-card>
         </div>
       </div>
     </div>
 </template>
-  
   <script>
   export default {
     data () {
       return {
+        user:'',
+        name:'',
         email: '',
-        username: '',
         password: ''
       }
-    }
+    },
+    methods: {
+    register() {
+      const register = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+      };
+
+      fetch(`http://127.0.0.1:8000/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(register)
+      }).then(response => response.json())
+        .then(res => {
+          alert('Cadastrado com sucesso !');
+        })
+        .catch(error => {
+           alert('algo deu errado');
+        });
+    },
+  }
   }
   </script>
   

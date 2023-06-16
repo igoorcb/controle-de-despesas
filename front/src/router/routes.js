@@ -1,6 +1,7 @@
-import LoginPage from 'pages/LoginPage.vue';
-import ExpensesControl from 'pages/ExpensesControl.vue';
-import RegisterPage from 'pages/RegisterPage.vue';
+import LoginPage from 'pages/LoginPage';
+import ExpensesControl from 'pages/ExpensesControl';
+import RegisterPage from 'pages/RegisterPage';
+import Guard from './services/middleware';
 
 const routes = [
   {
@@ -10,6 +11,7 @@ const routes = [
   {
     path: '/despesas',
     component: ExpensesControl,
+    beforeEnter: Guard.auth, // a rota /despesas fica bloqueada de ser acessada caso o token nao seja valido
   },
   {
     path: '/cadastro',

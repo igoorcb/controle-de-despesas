@@ -9,7 +9,7 @@
             <h4 class="text-h5 text-white q-my-md">Login</h4>
           </q-card-section>
           <q-card-section>
-            <q-form class="q-px-sm q-pt-xl">
+            <q-form class="q-px-sm q-pt-xl" >
               <q-input square clearable v-model="email" type="email" label="Email">
                 <template v-slot:prepend>
                   <q-icon name="email" />
@@ -23,10 +23,12 @@
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-lg">
-            <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" label="Entrar" />
+            <q-btn unelevated size="lg" color="purple-4"  icon="login" class="full-width text-white" @click="submit" label="Entrar" />
           </q-card-actions>
           <q-card-section class="text-center q-pa-sm">
-            <a class="text-grey-6">Criar conta</a>
+            <router-link to="/cadastro">
+              <q-btn color="grey-4" text-color="purple" glossy unelevated icon="account_circle" label="Criar Conta"  />
+            </router-link>
           </q-card-section>
         </q-card>
       </div>
@@ -34,15 +36,49 @@
   </div>
 </template>
 <script>
+import Cookie from 'js-cookie';
+
 export default {
-  data () {
+  data() {
+
     return {
       email: '',
-      username: '',
-      password: ''
-    }
+      password: '',
+      error: '',
+    };
+  },
+  created() {
+    Cookie.remove('login_token');
+  },
+
+  methods: {
+    submit() {
+      const payload = {
+        email: this.email,
+        password: this.password,
+      };
+
+      fetch(`http://127.0.0.1:8000/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      }).then(response => response.json())
+        .then(res => {
+          Cookie.set('login_token', res.authorization.token);
+          Cookie.set('user_name', res.user.name);
+          this.$router.push('/despesas'); // Redireciona para a rota '/despesas'
+        })
+        .catch(error => {
+           alert('Login inválido. Por favor, verifique suas credenciais.');
+        });
+    },
   }
 }
+
+
 </script>
 
 <style>

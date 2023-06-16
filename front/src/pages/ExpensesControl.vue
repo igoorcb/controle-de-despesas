@@ -8,6 +8,7 @@
         <q-card class="bg-grey-4">
           <q-card-section>
             <div class="q-gutter-md">
+              <q-input v-model="this.user" filled label="Usuário Logado" outlined />
               <q-input v-model="newExpense.description" filled label="Descrição" outlined />
               <q-select class="q-mt-md " v-model="newExpense.category" filled label="Categoria" outlined :options="categoryOptions" />
               <q-input v-model="newExpense.amount" filled label="Valor" type="number" outlined />
@@ -32,6 +33,9 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie';
+import { format } from 'date-fns';
+
 export default {
   data() {
     return {
@@ -43,6 +47,14 @@ export default {
       },
       expenses: [],
       columns: [
+        {
+          name: "user",
+          required: true,
+          label: "Usuário",
+          align: "left",
+          field: "user",
+          sortable: true,
+        },
         {
           name: "description",
           required: true,
@@ -80,23 +92,30 @@ export default {
       categoryOptions: ["Alimentação", "Lazer", "Transporte", "Outros"],
     };
   },
+  created(){
+      this.user = Cookie.get('user_name');
+    },
   methods: {
     addExpense() {
       if (!this.newExpense.description || !this.newExpense.amount || !this.newExpense.date) {
         return;
       }
-
       const newId = this.expenses.length + 1;
+      const formattedDate = format(new Date(this.newExpense.date), 'dd/MM/yyyy');
+      const formattedAmount = Number(this.newExpense.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
 
       this.expenses.push({
         id: newId,
+        user: this.user,
         description: this.newExpense.description,
-        amount: Number(this.newExpense.amount),
-        date: this.newExpense.date,
+        amount: formattedAmount,
+        date: formattedDate,
         category: this.newExpense.category,
       });
 
-      this.newExpense.description = "";
+      this.newExpense.user = "";
+      this.newExpense.category = "";
       this.newExpense.amount = "";
       this.newExpense.date = "";
     },
