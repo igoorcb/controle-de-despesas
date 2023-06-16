@@ -31,7 +31,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Cookie from 'js-cookie';
 import { format } from 'date-fns';
@@ -145,11 +144,7 @@ export default {
         this.showExpense();
     },
     deleteExpense(expenseId) {
-      const index = this.expenses.findIndex((expense) => expense.id === expenseId);
-
-      if (index !== -1) {
-        this.expenses.splice(index, 1);
-      }
+      alert();
     },
   },
 };

@@ -38,10 +38,8 @@
 </template>
 <script>
 import Cookie from 'js-cookie';
-
 export default {
   data() {
-
     return {
       email: '',
       password: '',
@@ -51,7 +49,6 @@ export default {
   created() {
     Cookie.remove('login_token');
   },
-
   methods: {
     submit() {
       const payload = {
@@ -81,8 +78,6 @@ export default {
     },
   }
 }
-
-
 </script>
 
 <style>

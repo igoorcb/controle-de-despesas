@@ -22,8 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 //Expenses
 Route::post('/register_expenses', [ExpensesController::class, 'save']);
 
-
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('/show_expenses', [ExpensesController::class, 'show']);
+    Route::post('/delete', [ExpensesController::class, 'delete']);
 });
-

@@ -17,8 +17,8 @@ class Expenses extends Model
         'date',
         'value',
     ];
-    public function User(): HasMany
+    public function User(): belongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

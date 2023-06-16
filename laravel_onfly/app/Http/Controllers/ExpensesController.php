@@ -31,7 +31,15 @@ class ExpensesController extends Controller
             'message' => 'Houve erros ao processar sua solicitação'
         ], 400);
     }
-
+    public function delete()
+    {
+        $delete = Expenses::where('id', '=', 14);
+        $delete->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Despesa deletada com sucesso!'
+        ], 200);
+    }
     public function show()
     {
         $user = Auth::user();
