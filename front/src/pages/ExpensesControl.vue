@@ -18,14 +18,21 @@
               <q-btn label="Adicionar Despesa" @click="addExpense" color="purple" class="q-mt-lg" />
             </div>
           </q-card-section>
-          <q-table :rows="expenses" :columns="columns" row-key="id" class="q-mt-md" style="background-color: rgb(216, 213, 213);">
-            <template v-slot:body-cell="props">
-              <q-td v-if="props.col.name !== 'actions'">{{ props.value }}</q-td>
-              <q-td v-else>
-                <q-btn flat dense  icon="delete" @click="deleteExpense(props.row.id)" />
-              </q-td>
-            </template>
-          </q-table>
+          <q-table :rows="expenses" :columns="columns" :no-data-label="customNoDataLabel" row-key="id" class="q-mt-md" style="background-color: rgb(216, 213, 213);">
+          <template v-slot:body-cell="props">
+            <q-td v-if="props.col.name !== 'actions'">
+              <!-- Formatação da data -->
+              <span v-if="props.col.name === 'date'">{{ formatDate(props.value) }}</span>
+              <!-- Formatação do valor -->
+              <span v-else-if="props.col.name === 'value'">{{ formatValue(props.value) }}</span>
+              <!-- Outros campos -->
+              <span v-else>{{ props.value }}</span>
+            </q-td>
+            <q-td v-else>
+              <q-btn flat dense icon="delete" @click="deleteExpense(props.row.id)" />
+            </q-td>
+          </template>
+        </q-table>
         </q-card>
       </div>
     </div>
@@ -45,6 +52,7 @@ export default {
       category: '',
       value: '',
       date: '',
+      customNoDataLabel: 'Não há dados disponíveis para exibir',
       categoryOptions: ["Alimentação", "Lazer", "Transporte", "Outros"],
       expenses: [],
       columns: [
@@ -145,6 +153,12 @@ export default {
     },
     deleteExpense(expenseId) {
       alert();
+    },
+    formatDate(date) {
+      return format(new Date(date), 'dd/MM/yyyy');
+    },
+    formatValue(value) {
+      return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     },
   },
 };
