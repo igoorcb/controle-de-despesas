@@ -5,7 +5,7 @@
     <div class="column q-pa-lg">
       <div class="row">
         <q-card square class="shadow-24 size_card">
-          <q-card-section class="bg-deep-purple-7">
+          <q-card-section class="bg-blue-10">
             <h4 class="text-h5 text-white q-my-md text-center">Login</h4>
           </q-card-section>
           <q-card-section>
@@ -24,11 +24,11 @@
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-lg">
-            <q-btn unelevated size="lg" color="purple-4"  icon="login" class="full-width text-white" @click="submit" label="Entrar" />
+            <q-btn unelevated size="lg" color="blue-10"  icon="login" class="full-width text-white" @click="submit" label="Entrar" />
           </q-card-actions>
           <q-card-section class="text-center q-pa-sm">
             <router-link to="/cadastro">
-              <q-btn color="grey-4" text-color="purple" glossy unelevated icon="account_circle" label="Criar Conta"  />
+              <q-btn color="grey-4" text-color="blue-10" glossy unelevated icon="account_circle" label="Criar Conta"  />
             </router-link>
           </q-card-section>
         </q-card>

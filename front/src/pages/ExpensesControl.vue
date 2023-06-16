@@ -2,8 +2,8 @@
   <div class="window-height window-width q-pa-lg background_color">
     <div class="row justify-center">
       <div square class="shadow-24 size_expenses">
-        <q-card-section class="bg-deep-purple-7">
-          <h4 class="text-h5 text-white q-my-md">Controle de Despesas</h4>
+        <q-card-section class="bg-purple-10">
+          <h4 class="text-h5 text-white q-my-md text-center">Controle de Despesas</h4>
         </q-card-section>
         <q-card class="bg-grey-4">
           <q-card-section>
@@ -15,7 +15,7 @@
               <q-input v-model="date" filled type="date" label="Data" />
             </div>
             <div class="q-gutter-md row items-end justify-end">
-              <q-btn label="Adicionar Despesa" @click="addExpense" color="purple" class="q-mt-lg" />
+              <q-btn label="Adicionar Despesa" @click="addExpense" color="purple-10" class="q-mt-lg" />
             </div>
           </q-card-section>
           <q-table :rows="expenses" :columns="columns" :no-data-label="customNoDataLabel" row-key="id" class="q-mt-md" style="background-color: rgb(216, 213, 213);">
@@ -29,7 +29,7 @@
               <span v-else>{{ props.value }}</span>
             </q-td>
             <q-td v-else>
-              <q-btn flat dense icon="delete" @click="deleteExpense(props.row.id)" />
+              <q-btn flat dense icon="delete" color="purple" @click="deleteExpense(props.row.id)" />
             </q-td>
           </template>
         </q-table>
@@ -132,7 +132,7 @@ export default {
         body: JSON.stringify(delete_expenses)
       }).then(response => response.json())
         .then(res => {
-          alert('Despesa adicionada com sucesso !');
+          alert('Despesa deletada com sucesso !');
         })
         .catch(error => {
            alert('algo deu errado');

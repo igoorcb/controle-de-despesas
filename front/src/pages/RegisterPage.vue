@@ -5,8 +5,8 @@
       <div class="column q-pa-lg">
         <div class="row">
           <q-card square class="shadow-24 size_card"> 
-            <q-card-section class="bg-deep-purple-7">
-              <h4 class="text-h5 text-white q-my-md">Cadastrar</h4>
+            <q-card-section class="bg-purple-7">
+              <h4 class="text-h5 text-white q-my-md text-center">Cadastrar</h4>
             </q-card-section>
             <q-card-section>
               <q-form class="q-px-sm q-pt-xl q-pb-lg">
@@ -28,11 +28,11 @@
               </q-form>
             </q-card-section>
             <q-card-actions class="q-px-lg">
-              <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" @click="register" label="Cadastrar" />
+              <q-btn unelevated size="lg" color="purple-7" class="full-width text-white" @click="register" label="Cadastrar" />
             </q-card-actions>
             <q-card-section class="text-center q-pa-sm">
               <router-link to="/">
-              <q-btn color="grey-4" text-color="purple" glossy unelevated icon="arrow_back" label="Voltar para o login"  />
+              <q-btn color="grey-4" text-color="purple-7" glossy unelevated icon="arrow_back" label="Voltar para o login"  />
             </router-link>
             </q-card-section>
           </q-card>
