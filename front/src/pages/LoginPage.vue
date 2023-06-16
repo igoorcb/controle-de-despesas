@@ -4,7 +4,7 @@
   >
     <div class="column q-pa-lg">
       <div class="row">
-        <q-card square class="shadow-24 size_card">
+        <q-card square class="shadow-24 size_card border-radius" >
           <q-card-section class="bg-blue-10">
             <h4 class="text-h5 text-white q-my-md text-center">Login</h4>
           </q-card-section>
