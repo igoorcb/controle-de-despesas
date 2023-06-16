@@ -1,4 +1,4 @@
-# Como rodar o projeto:
+Projeto:
 
 Login usando o JWT e CRUD para cadastro de despesas. 
 
