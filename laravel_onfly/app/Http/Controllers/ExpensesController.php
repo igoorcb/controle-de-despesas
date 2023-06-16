@@ -33,8 +33,7 @@ class ExpensesController extends Controller
     }
     public function delete(Request $request)
     {
-        dd($request->user_id);
-        $delete = Expenses::where('id', '=', $request->user_id);
+        $delete = Expenses::where('id', '=', $request->id);
         $delete->delete();
         return response()->json([
             'status' => 'success',

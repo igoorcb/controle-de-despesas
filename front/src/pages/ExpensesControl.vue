@@ -119,6 +119,26 @@ export default {
         console.log(this.expenses)
       })
     },
+    deleteExpense(id) {
+      const delete_expenses = {
+        id: id ,
+      };
+      fetch(`http://127.0.0.1:8000/api/delete`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + this.login_token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(delete_expenses)
+      }).then(response => response.json())
+        .then(res => {
+          alert('Despesa adicionada com sucesso !');
+        })
+        .catch(error => {
+           alert('algo deu errado');
+        });
+        this.showExpense();
+    },
     addExpense() {
       const register_expenses = {
         user_id: this.user_id ,
@@ -150,9 +170,6 @@ export default {
         this.value = "";
         this.date = "";
         this.showExpense();
-    },
-    deleteExpense(expenseId) {
-      alert();
     },
     formatDate(date) {
       return format(new Date(date), 'dd/MM/yyyy');
