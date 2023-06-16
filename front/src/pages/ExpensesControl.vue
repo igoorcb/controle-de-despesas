@@ -48,6 +48,41 @@ export default {
       date: '',
       categoryOptions: ["Alimentação", "Lazer", "Transporte", "Outros"],
       expenses: [],
+      columns: [
+        {
+          name: "description",
+          required: true,
+          label: "Descrição",
+          align: "left",
+          field: "description",
+          sortable: true,
+        },
+        {
+          name: "category",
+          required: true,
+          label: "Categoria",
+          align: "left",
+          field: "category",
+          sortable: true,
+        },
+        {
+          name: "value",
+          required: true,
+          label: "Valor",
+          align: "left",
+          field: "value",
+          sortable: true,
+        },
+        {
+          name: "date",
+          required: true,
+          label: "Data",
+          align: "left",
+          field: "date",
+          sortable: true,
+        },
+        { name: "actions", label: "Ações", align: "center", field: "actions" },
+      ],
     };
   },
   created(){
